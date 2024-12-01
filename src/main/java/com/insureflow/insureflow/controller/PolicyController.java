@@ -19,9 +19,14 @@ public class PolicyController {
         return policyService.savePolicy(policy);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<Policy> getPoliciesByUserId(@PathVariable Long userId) {
-        return policyService.getPoliciesByUserId(userId);
+    @GetMapping
+    public List<Policy> getPolicies(@RequestParam(required = false) Long userId) {
+        if (userId != null) {
+            // Fetch policies for a specific user
+            return policyService.getPoliciesByUserId(userId);
+        }
+        // Fetch all policies if no userId is provided
+        return policyService.getAllPolicies();
     }
 
     @PostMapping("/{policyId}/risk-assessment")

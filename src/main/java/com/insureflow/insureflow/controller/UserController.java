@@ -32,9 +32,15 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @GetMapping("/{email}")
-    public User getUserByEmail(@PathVariable String email) {
-        return userService.findByEmail(email);
+    @GetMapping
+    public List<User> getUsers(@RequestParam(required = false) String email) {
+        if (email != null) {
+            // Fetch by email if provided
+            User user = userService.findByEmail(email);
+            return user != null ? List.of(user) : List.of(); // Return as a list
+        }
+        // Fetch all users if no email is provided
+        return userService.findAllUsers();
     }
 
     @GetMapping("/{userId}/dashboard")

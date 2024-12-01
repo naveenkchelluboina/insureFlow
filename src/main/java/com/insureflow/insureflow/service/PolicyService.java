@@ -24,4 +24,8 @@ public class PolicyService {
         return policyRepository.findById(policyId)
                 .orElseThrow(() -> new RuntimeException("Policy with ID " + policyId + " not found"));
     }
+
+    public List<Policy> getAllPolicies() {
+        return policyRepository.findAll();
+    }
 }

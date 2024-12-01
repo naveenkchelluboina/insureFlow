@@ -18,8 +18,13 @@ public class TransactionController {
         return transactionService.saveTransaction(transaction);
     }
 
-    @GetMapping("/account/{accountId}")
-    public List<Transaction> getTransactionsByAccountId(@PathVariable Long accountId) {
-        return transactionService.getTransactionsByAccountId(accountId);
+    @GetMapping
+    public List<Transaction> getTransactions(@RequestParam(required = false) Long accountId) {
+        if (accountId != null) {
+            // Fetch transactions for a specific account
+            return transactionService.getTransactionsByAccountId(accountId);
+        }
+        // Fetch all transactions if no accountId is provided
+        return transactionService.getAllTransactions();
     }
 }

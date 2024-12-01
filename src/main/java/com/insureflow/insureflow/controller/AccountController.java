@@ -18,8 +18,13 @@ public class AccountController {
         return accountService.saveAccount(account);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<Account> getAccountsByUserId(@PathVariable Long userId) {
-        return accountService.getAccountsByUserId(userId);
+    @GetMapping
+    public List<Account> getAccounts(@RequestParam(required = false) Long userId) {
+        if (userId != null) {
+            // Fetch accounts for a specific user
+            return accountService.getAccountsByUserId(userId);
+        }
+        // Fetch all accounts if no userId is provided
+        return accountService.getAllAccounts();
     }
 }
